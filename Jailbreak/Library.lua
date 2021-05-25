@@ -701,6 +701,7 @@ function Library:Window(Name, Color, SizeY)
             end
 
             function Functions:Dropdown(...)
+                local DropdownActions = {}
                 local Dropdown = Instance.new("TextLabel")
                 local Button = Instance.new("TextButton")
                 local Frame = Instance.new("Frame")
@@ -825,6 +826,12 @@ function Library:Window(Name, Color, SizeY)
                         Func.Visible = false
                     end
                 end
+
+                function DropdownActions:AddValue(name)
+                    createfunc(name, Func)
+                end
+
+                return DropdownActions
             end
 
             function Functions:Keybind(Name, Func)
