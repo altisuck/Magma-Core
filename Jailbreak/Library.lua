@@ -15,6 +15,11 @@ function Library:Window(Name, Color, SizeY)
     local Content = Instance.new("Frame")
     local TabsListLayout = Instance.new("UIListLayout")
     local Tabs = Instance.new("Frame")
+    local ToggleKey = Enum.KeyCode.RightShift
+    local typing = false
+    local toggled = true
+    local savedpos = UDim2.new(0.5, 0, 0.5, 0)
+    local UpConnection
     local oldTab
     getgenv().WindowThemeColor = Color
 
@@ -172,6 +177,37 @@ function Library:Window(Name, Color, SizeY)
     end)
 
     local WindowLibrary = {}
+
+    function WindowLibrary:SetToggleKey(key)
+        ToggleKey = key
+
+        if UpConnection then
+            UpConnection:Disconnect()
+        end
+
+        UpConnection = UserInput.InputEnded:Connect(function(input)
+            if input.KeyCode == ToggleKey and not typing then
+                toggled = not toggled
+                if toggled then
+                    pcall(Drag.TweenPosition, Drag, savedpos, "Out", "Sine", 0.5, true)
+                else
+                    savedpos = Drag.Position
+                    pcall(Drag.TweenPosition, Drag, UDim2.new(savedpos.Width.Scale, savedpos.Width.Offset, 1.5, 0), "Out", "Sine", 0.5, true)
+                end
+            end
+        end)
+    end
+
+    UpConnection = UserInput.InputEnded:Connect(function(input)
+        if input.KeyCode == ToggleKey and not typing then
+            toggled = not toggled
+            if toggled then
+                Drag:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.5, true)
+            else
+                Drag:TweenPosition(UDim2.new(0.5, 0, 1.5, 0), "Out", "Sine", 0.5, true)
+            end
+        end
+    end)
 
     function WindowLibrary:Label(Name, Color)
         local Label = Instance.new("TextLabel")
@@ -380,6 +416,24 @@ function Library:Window(Name, Color, SizeY)
                 end
 
                 return ToggleActions
+            end
+
+            function Functions:Label(Name)
+                local Slider = Instance.new("TextLabel")
+
+                Slider.Name = "Slider"
+                Slider.Parent = SectionContents
+                Slider.BackgroundColor3 = Color3.new(1, 1, 1)
+                Slider.BackgroundTransparency = 1
+                Slider.Position = UDim2.new(0, 0, 1.86666656, 0)
+                Slider.Size = UDim2.new(0, 178, 0, 39)
+                Slider.Font = Enum.Font.Code
+                Slider.Text = Name
+                Slider.TextColor3 = Color3.new(255, 255, 255)
+                Slider.TextSize = 14
+                Slider.TextStrokeTransparency = 0.4
+                Slider.TextXAlignment = Enum.TextXAlignment.Left
+                Slider.TextYAlignment = Enum.TextYAlignment.Top
             end
 
             function Functions:Color(Name, Default, Func)
@@ -922,7 +976,8 @@ function Library:Window(Name, Color, SizeY)
                 end)
             end
 
-            function Functions:Slider(Name, Max, Min, Func)
+
+            function Functions:Slider(Name, Max, Default, Min, Func)
                 local SliderActions = {}
                 local Slider = Instance.new("TextLabel")
                 local Toggle = Instance.new("TextButton")
@@ -1029,10 +1084,13 @@ function Library:Window(Name, Color, SizeY)
                         percentage = math.clamp(pos,0,1)
                         TextButton:TweenSizeAndPosition(UDim2.new(percentage,0,1,0), UDim2.new(percentage/100,-2,(BtnPos.Y.Scale), BtnPos.Y.Offset), nil, nil, 0.08)
                         local est = math.floor((math.floor((Max * percentage) * Max) / Max)) + Min
+                        Num.Text = Default;
                         if Min == est then
                             Num.Text = Min
+                        elseif Min ~= est then
+                            Num.Text = est;
                         else
-                            Num.Text = est
+                            Num.Text = Default;
                         end
                         Func(tonumber(Num.Text))
                     end
@@ -1045,7 +1103,7 @@ function Library:Window(Name, Color, SizeY)
                 return SliderActions
             end
 
-            function Functions:ToggleSlider(Name, Max, Min, Func)
+            function Functions:ToggleSlider(Name, Max, DefVal, Min, Func)
                 local ToggleSliderActions = {}
                 local Slider = Instance.new("TextLabel")
                 local Toggle = Instance.new("TextButton")
@@ -1121,6 +1179,8 @@ function Library:Window(Name, Color, SizeY)
                 Num.TextColor3 = Color3.new(1, 1, 1)
                 Num.TextSize = 14
                 Num.TextStrokeTransparency = 0.4
+
+                Num.Text = DefVal;
 
                 Toggle.MouseButton1Click:Connect(function()
                     if getgenv()[Name] then
@@ -1203,6 +1263,7 @@ function Library:Window(Name, Color, SizeY)
                     Func(getgenv()[Name], tonumber(Num.Text))
                     return
                 end
+                ToggleSliderActions:SetState(true, DefVal);
             end
 
             function Functions:Textbox(Name, PlayerHolder, Func)
@@ -1248,11 +1309,13 @@ function Library:Window(Name, Color, SizeY)
                 Frame.Size = UDim2.new(0, 1, 0, 0)
 
                 TextBox.Focused:Connect(function()
+                    typing = true
                     Frame.Size = UDim2.new(0,1,0,1)
                     Frame:TweenSizeAndPosition(UDim2.new(0,220,0,1), UDim2.new(-0.009,0,1,0),nil,nil,0.5)
                 end)
 
                 TextBox.FocusLost:Connect(function()
+                    typing = false
                     if TextBox.Text == '' then
                         Frame:TweenSizeAndPosition(UDim2.new(0,1,0,0), UDim2.new(0,0,1,0),nil,nil,0.5)
                     end
