@@ -809,10 +809,6 @@ function Library:Window(Name, Color, SizeY)
                     return Button
                 end
 
-                if FuncData then
-                    Func(FuncData[1]) 
-                end
-
                 Button.MouseButton1Click:Connect(function()
                     if Frame.Visible then
                         tweenDropdown(0,0.1)
