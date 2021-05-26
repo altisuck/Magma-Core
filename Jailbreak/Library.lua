@@ -741,7 +741,11 @@ function Library:Window(Name, Color, SizeY)
                 Button.Size = UDim2.new(0, 223, 0, 18)
                 Button.AutoButtonColor = false
                 Button.Font = Enum.Font.Code
-                Button.Text = " "..FuncData[1]
+                if FuncData then
+                    Button.Text = " "..FuncData[1]
+                else
+                    Button.Text = " " 
+                end
                 Button.TextColor3 = Color3.new(1, 1, 1)
                 Button.TextSize = 14
                 Button.TextStrokeTransparency = 0.40000000596046
@@ -760,7 +764,9 @@ function Library:Window(Name, Color, SizeY)
                 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
                 local function tweenDropdown(Size, Time)
-                    tweenProp(Frame, {Size = UDim2.new(0, 223, 0, (#FuncData-1)*Size)})
+                    if FuncData then
+                        tweenProp(Frame, {Size = UDim2.new(0, 223, 0, (#FuncData-1)*Size)})
+                    end
                     for _, TextButton in next, Frame:GetChildren() do
                         if TextButton:IsA("TextButton") and TextButton ~= Button then
                             tweenProp(TextButton, {Size = UDim2.new(0, 223, 0, Size)})
@@ -803,7 +809,9 @@ function Library:Window(Name, Color, SizeY)
                     return Button
                 end
 
-                Func(FuncData[1])
+                if FuncData then
+                    Func(FuncData[1]) 
+                end
 
                 Button.MouseButton1Click:Connect(function()
                     if Frame.Visible then
@@ -820,11 +828,13 @@ function Library:Window(Name, Color, SizeY)
                     end
                 end
 
-                for FuncNum, FuncName in next, FuncData do
-                    local Func = createfunc(FuncName, Func)
-                    if FuncNum == 1 then
-                        Func.Visible = false
-                    end
+                if FuncData then
+                    for FuncNum, FuncName in next, FuncData do
+                        local Func = createfunc(FuncName, Func)
+                        if FuncNum == 1 then
+                            Func.Visible = false
+                        end
+                    end 
                 end
 
                 function DropdownActions:AddValue(name)
@@ -1199,7 +1209,7 @@ function Library:Window(Name, Color, SizeY)
                 end
             end
 
-            function Functions:Textbox(Name, Func)
+            function Functions:Textbox(Name, PlayerHolder, Func)
                 local TextboxActions = {}
                 local Textbox = Instance.new("TextLabel")
                 local TextBox = Instance.new("TextBox")
@@ -1228,7 +1238,7 @@ function Library:Window(Name, Color, SizeY)
                 TextBox.ClearTextOnFocus = false
                 TextBox.Font = Enum.Font.SourceSans
                 TextBox.PlaceholderColor3 = Color3.new(0.764706, 0.764706, 0.764706)
-                TextBox.PlaceholderText = "Type something here!"
+                TextBox.PlaceholderText = PlayerHolder or "Type something here!"
                 TextBox.Text = ""
                 TextBox.TextColor3 = Color3.new(1, 1, 1)
                 TextBox.TextSize = 14
