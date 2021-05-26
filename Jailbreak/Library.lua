@@ -421,7 +421,7 @@ function Library:Window(Name, Color, SizeY)
             function Functions:Label(Name)
                 local TextLabel = Instance.new("TextLabel")
 
-                TextLabel.Parent = TextLabel
+                TextLabel.Parent = SectionContents
                 TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
                 TextLabel.BackgroundTransparency = 1
                 TextLabel.Position = UDim2.new(1.67999995, 0, -0.0149999997, 0)
