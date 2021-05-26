@@ -1,1 +1,2 @@
--- 1.1.9b
+-- 1.2.6b stable release;
+-- soon
