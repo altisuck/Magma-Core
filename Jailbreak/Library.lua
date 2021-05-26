@@ -419,21 +419,19 @@ function Library:Window(Name, Color, SizeY)
             end
 
             function Functions:Label(Name)
-                local Slider = Instance.new("TextLabel")
+                local TextLabel = Instance.new("TextLabel")
 
-                Slider.Name = "Slider"
-                Slider.Parent = SectionContents
-                Slider.BackgroundColor3 = Color3.new(1, 1, 1)
-                Slider.BackgroundTransparency = 1
-                Slider.Position = UDim2.new(0, 0, 1.86666656, 0)
-                Slider.Size = UDim2.new(0, 178, 0, 39)
-                Slider.Font = Enum.Font.Code
-                Slider.Text = Name
-                Slider.TextColor3 = Color3.new(255, 255, 255)
-                Slider.TextSize = 14
-                Slider.TextStrokeTransparency = 0.4
-                Slider.TextXAlignment = Enum.TextXAlignment.Left
-                Slider.TextYAlignment = Enum.TextYAlignment.Top
+                TextLabel.Parent = TextLabel
+                TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+                TextLabel.BackgroundTransparency = 1
+                TextLabel.Position = UDim2.new(1.67999995, 0, -0.0149999997, 0)
+                TextLabel.Size = UDim2.new(0, 199, 0, 13)
+                TextLabel.Font = Enum.Font.Code
+                TextLabel.Text = Name
+                TextLabel.TextColor3 = Color3.new(0.301961, 0.301961, 0.301961)
+                TextLabel.TextSize = 14
+                TextLabel.TextStrokeTransparency = 0.4
+                TextLabel.TextXAlignment = Enum.TextXAlignment.Left
             end
 
             function Functions:Color(Name, Default, Func)
