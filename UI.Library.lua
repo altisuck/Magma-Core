@@ -256,7 +256,7 @@ function magma:Window(name, color, sizey)
             Size = UDim2.new(0, 6, 0, 23),
             Font = Enum.Font.Code,
             Text = "|",
-            TextColor3 = Color3.fromRGB(255, 255, 255),
+            TextColor3 = coColor3.fromRGB(255, 255, 255),
             TextSize = 14,
             TextStrokeTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
@@ -851,7 +851,7 @@ function magma:Window(name, color, sizey)
                 })
 
                 local function tweenDropdown(Size, Time)
-                    magma.tween(Frame, {Size = UDim2.new(0, 223, 0, (#list - 1) * Size)})
+                    magma.tween(Frame, {Size = UDim2.new(0, 223, 0, (#options - 1) * Size)})
                     for _, TextButton in next, Frame:GetChildren() do
                         if TextButton:IsA("TextButton") and TextButton ~= Button then
                             magma.tween(TextButton, {Size = UDim2.new(0, 223, 0, Size)})
@@ -880,15 +880,15 @@ function magma:Window(name, color, sizey)
                     })
 
                     Button.MouseButton1Click:Connect(function()
-                        Function(Name)
                         Button.Visible = false
-                        Frame.Parent.Text = " " .. Name
                         tweenDropdown(0, 0.01)
+                        Frame.Parent.Text = " " .. Name
                         for _, TextButton in next, Frame:GetChildren() do
                             if TextButton:IsA("TextButton") and TextButton ~= Button then
                                 TextButton.Visible = true
                             end
                         end
+                        Function(Name)
                     end)
 
                     return Button
