@@ -247,7 +247,7 @@ function magma:Window(name, color, sizey)
         end)
     end
 
-    function windowLibrary:Label(name, color)
+    function windowLibrary:Label(name)
         local Differ = magma:Create("TextLabel", {
             Name = "Differ",
             BackgroundColor3 = Color3.new(1, 1, 1),
@@ -256,7 +256,7 @@ function magma:Window(name, color, sizey)
             Size = UDim2.new(0, 6, 0, 23),
             Font = Enum.Font.Code,
             Text = "|",
-            TextColor3 = color or Color3.fromRGB(255, 255, 255),
+            TextColor3 = Color3.fromRGB(255, 255, 255),
             TextSize = 14,
             TextStrokeTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
@@ -271,7 +271,7 @@ function magma:Window(name, color, sizey)
             Size = UDim2.new(0, #name * 6.833333333333333, 0, 23),
             Font = Enum.Font.Code,
             Text = name,
-            TextColor3 = color or Color3.fromRGB(150, 150, 150),
+            TextColor3 = Color3.fromRGB(150, 150, 150),
             TextSize = 14,
             TextStrokeTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
