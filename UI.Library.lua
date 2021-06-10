@@ -256,7 +256,7 @@ function magma:Window(name, color, sizey)
             Size = UDim2.new(0, 6, 0, 23),
             Font = Enum.Font.Code,
             Text = "|",
-            TextColor3 = coColor3.fromRGB(255, 255, 255),
+            TextColor3 = color or Color3.fromRGB(255, 255, 255),
             TextSize = 14,
             TextStrokeTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
