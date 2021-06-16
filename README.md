@@ -3,6 +3,7 @@
 * Scriptware
 * Protosmasher
 * Fluxus
+* KRNL
 
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/opBandwidth/Magma-Core/main/Jailbreak/Main.lua"))()
