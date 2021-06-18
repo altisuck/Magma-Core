@@ -1,6 +1,6 @@
 ### Supported Script Executors:
 * Synapse X
-* Scriptware
+* Scriptware - Windows
 * Protosmasher
 * Fluxus
 * KRNL
